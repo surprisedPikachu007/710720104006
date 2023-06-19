@@ -5,18 +5,20 @@ interface Props {
   seatsAvailable: { sleeper: number; AC: number };
   price: { sleeper: number; AC: number };
   delayTime: number;
+  onClick?: () => void;
 }
 
-const Train = ({
+const Trains = ({
   trainName,
   trainNumber,
   departureTime,
   seatsAvailable,
   price,
   delayTime,
+  onClick,
 }: Props) => {
   return (
-    <div className="card" style={{ width: "18rem" }}>
+    <div className="card">
       <div className="card-body">
         <h5 className="card-title">Train Name: {trainName}</h5>
         <p className="card-text">Train Number: {trainNumber}</p>
@@ -32,7 +34,7 @@ const Train = ({
           Price - Sleeper: {price.sleeper}, AC: {price.AC}
         </p>
         <p className="card-text">Delay Time: {delayTime} minutes</p>
-        <a href="#" className="btn btn-primary">
+        <a href="#" className="btn btn-primary" onClick={onClick}>
           View Details
         </a>
       </div>
@@ -40,4 +42,4 @@ const Train = ({
   );
 };
 
-export default Train;
+export default Trains;

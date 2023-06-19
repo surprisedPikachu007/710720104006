@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Train from "./Train";
+import Trains from "./Trains";
 
 const App = () => {
   const [trains, setTrains] = useState([]);
@@ -19,23 +19,24 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h1>Train Information</h1>
+    <>
+      <h1>Trainly</h1>
       <ul className="list-group">
         {trains.map((train: any) => (
-          <li className="list-group-item" key={train.trainNumber}>
-            <Train
+          <li className="list-group-item" key={train.id}>
+            <Trains
               trainName={train.trainName}
               trainNumber={train.trainNumber}
               departureTime={train.departureTime}
               seatsAvailable={train.seatsAvailable}
               price={train.price}
               delayTime={train.delayTime}
+              onClick={() => console.log("Clicked!")}
             />
           </li>
         ))}
       </ul>
-    </div>
+    </>
   );
 };
 
