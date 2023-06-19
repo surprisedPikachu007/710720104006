@@ -22,7 +22,7 @@ def timeFilter(trains):
         nowSeconds = int(time.hour) * 3600 + int(time.minute) * 60 + int(time.second)
         diff = trainSeconds - nowSeconds
         
-        if diff <= 12 * 3600:
+        if diff <= 12 * 3600 and diff >= 1800:
             l.append(train)
         
     return l
