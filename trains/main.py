@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import datetime
 import requests
+import get_token
 
 app = FastAPI()
 
@@ -14,7 +15,7 @@ app.add_middleware(
 )
 
 url = "http://104.211.219.98/train/trains"
-bearer = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODcxNjEzNzYsImNvbXBhbnlOYW1lIjoiNzEwNzIwMTA0MDA2IiwiY2xpZW50SUQiOiIyNWIwZDNjNC1hMGVjLTQzNmMtYTA2Zi1jNzMyYjFjYWMyZTkiLCJvd25lck5hbWUiOiIiLCJvd25lckVtYWlsIjoiIiwicm9sbE5vIjoiNzEwNzIwMTA0MDA2In0.vYdOyAnp9696E22waPLNenm9jWYmUZliqPERyv6MxAQ"
+bearer = str(get_token.getToken())
 headers = {"Authorization": "Bearer " + bearer}
 
 
