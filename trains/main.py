@@ -5,7 +5,7 @@ import requests
 app = FastAPI()
 
 url = "http://104.211.219.98/train/trains"
-bearer = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODcxNTc1OTEsImNvbXBhbnlOYW1lIjoiNzEwNzIwMTA0MDA2IiwiY2xpZW50SUQiOiIyNWIwZDNjNC1hMGVjLTQzNmMtYTA2Zi1jNzMyYjFjYWMyZTkiLCJvd25lck5hbWUiOiIiLCJvd25lckVtYWlsIjoiIiwicm9sbE5vIjoiNzEwNzIwMTA0MDA2In0.ut9e7sdSgJ4y2dGcTSDmY-HGzGfok0SW0B64_BXobFM"
+bearer = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODcxNTgzMTMsImNvbXBhbnlOYW1lIjoiNzEwNzIwMTA0MDA2IiwiY2xpZW50SUQiOiIyNWIwZDNjNC1hMGVjLTQzNmMtYTA2Zi1jNzMyYjFjYWMyZTkiLCJvd25lck5hbWUiOiIiLCJvd25lckVtYWlsIjoiIiwicm9sbE5vIjoiNzEwNzIwMTA0MDA2In0.VnFOo2mYhj_YKiPIVFawpN2iv_9NynFSmtwsTTUOY9s"
 headers = {"Authorization": "Bearer " + bearer}
 
 
@@ -27,7 +27,9 @@ def timeFilter(trains):
         
     return l
     
-    
+def sortTrains(trains):
+    sorted_trains = sorted(trains, key=lambda train: (train['price']['sleeper'], train['seatsAvailable']['sleeper'], -(train['departureTime']['Hours'] * 3600 + train['departureTime']['Minutes'] * 60 + train['departureTime']['Seconds'] + train['delayedBy'] * 60)))
+    return sorted_trains
     
     
 @app.get("/")
@@ -39,6 +41,7 @@ def getTrains():
     
     trains = response.json()
     trains = timeFilter(trains)
+    trains = sortTrains(trains)
     
     return trains
     
