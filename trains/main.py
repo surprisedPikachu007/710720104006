@@ -5,7 +5,7 @@ import requests
 app = FastAPI()
 
 url = "http://104.211.219.98/train/trains"
-bearer = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODcxNTcyMTMsImNvbXBhbnlOYW1lIjoiNzEwNzIwMTA0MDA2IiwiY2xpZW50SUQiOiIyNWIwZDNjNC1hMGVjLTQzNmMtYTA2Zi1jNzMyYjFjYWMyZTkiLCJvd25lck5hbWUiOiIiLCJvd25lckVtYWlsIjoiIiwicm9sbE5vIjoiNzEwNzIwMTA0MDA2In0.fLA-KP3BsUcl7d5qXvsZAhfpKUoqB09Smij5S07-9BQ"
+bearer = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODcxNTc1OTEsImNvbXBhbnlOYW1lIjoiNzEwNzIwMTA0MDA2IiwiY2xpZW50SUQiOiIyNWIwZDNjNC1hMGVjLTQzNmMtYTA2Zi1jNzMyYjFjYWMyZTkiLCJvd25lck5hbWUiOiIiLCJvd25lckVtYWlsIjoiIiwicm9sbE5vIjoiNzEwNzIwMTA0MDA2In0.ut9e7sdSgJ4y2dGcTSDmY-HGzGfok0SW0B64_BXobFM"
 headers = {"Authorization": "Bearer " + bearer}
 
 
@@ -16,9 +16,9 @@ def timeFilter(trains):
     
     for train in trains:
         trainDepartureTime = train['departureTime']
-        trainTime = [int(trainDepartureTime['Hours']), int(trainDepartureTime['Minutes']), int(trainDepartureTime['Seconds'])]
+        trainTime = [int(trainDepartureTime['Hours']), int(trainDepartureTime['Minutes']), int(trainDepartureTime['Seconds']), int(train['delayedBy'])]
         
-        trainSeconds = trainTime[0] * 3600 + trainTime[1] * 60 + trainTime[2]
+        trainSeconds = trainTime[0] * 3600 + trainTime[1] * 60 + trainTime[3] * 60 + trainTime[2]
         nowSeconds = int(time.hour) * 3600 + int(time.minute) * 60 + int(time.second)
         diff = trainSeconds - nowSeconds
         
@@ -27,7 +27,9 @@ def timeFilter(trains):
         
     return l
     
-
+    
+    
+    
 @app.get("/")
 def getTrains():
     response = requests.get(url, headers=headers)
